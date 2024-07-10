@@ -144,43 +144,87 @@ vim.api.nvim_create_autocmd({ 'TermOpen' }, {
 
 -- Setup lazy.nvim
 require("lazy").setup({
-  spec = {
-    -- add your plugins here
-    {
-	'sainnhe/sonokai',
-	lazy = false,
-	priority = 1000,
-	config = function()
-	    vim.cmd([[colorscheme sonokai]])
-	end,
-    },
-    {
-	'IMOKURI/line-number-interval.nvim',
-	lazy = false,
-	priority = 500,
-	init = function()
-	    vim.g.line_number_interval_enable_at_startup = 1
-	    vim.g['line_number_interval#use_custom'] = 1
-	    vim.g['line_number_interval#custom_interval'] = {1,2,3,4,5,10,20,30,40,50,60,70,80,90}
-	    vim.cmd[[
-		highlight HighlightedLineNr ctermfg=white
-    		highlight DimLineNr ctermfg=238
-    		highlight HighlightedLineNr1 ctermfg=125
-    		highlight HighlightedLineNr2 ctermfg=178
-    		highlight HighlightedLineNr3 ctermfg=254
-    		highlight HighlightedLineNr4 ctermfg=44
-    		highlight HighlightedLineNr5 ctermfg=26
-	    ]]
-	end,
-    },
-    {
-	'vim-jp/vimdoc-ja',
-	lazy = true,
-	keys = {
-	    { "h", mode = "c", },
+    spec = {
+	-- add your plugins here
+	{
+	    'sainnhe/sonokai',
+	    lazy = false,
+	    priority = 1000,
+	    config = function()
+		vim.cmd([[colorscheme sonokai]])
+	    end,
+	},
+	{
+	    'IMOKURI/line-number-interval.nvim',
+	    lazy = false,
+	    priority = 500,
+	    init = function()
+		vim.g.line_number_interval_enable_at_startup = 1
+		vim.g['line_number_interval#use_custom'] = 1
+		vim.g['line_number_interval#custom_interval'] = {1,2,3,4,5,10,20,30,40,50,60,70,80,90}
+		vim.cmd[[
+		    highlight HighlightedLineNr ctermfg=white
+		    highlight DimLineNr ctermfg=238
+		    highlight HighlightedLineNr1 ctermfg=125
+		    highlight HighlightedLineNr2 ctermfg=178
+		    highlight HighlightedLineNr3 ctermfg=254
+		    highlight HighlightedLineNr4 ctermfg=44
+		    highlight HighlightedLineNr5 ctermfg=26
+		]]
+	    end,
+	},
+	{
+	    'vim-jp/vimdoc-ja',
+	    lazy = true,
+	    keys = {
+		{ "h", mode = "c", },
+	    },
+	},
+	{
+	    'nvim-lualine/lualine.nvim',
+	    dependencies = { 'nvim-tree/nvim-web-devicons' },
+	    opts = {
+		options = {
+		    theme = 'horizon',
+		    icons_enabled = true,
+		    component_separators = { left = '', right = ''},
+		    section_separators = { left = '', right = ''},
+		    disabled_filetypes = {
+		        statusline = {},
+		        winbar = {},
+		    },
+		    ignore_focus = {},
+		    always_divide_middle = true,
+		    globalstatus = false,
+		    refresh = {
+			statusline = 1000,
+			tabline = 1000,
+			winbar = 1000,
+		    },
+		},
+		sections = {
+		    lualine_a = {'mode'},
+		    lualine_b = {'branch', 'diff', 'diagnostics'},
+		    lualine_c = {'filename'},
+		    lualine_x = {'encoding', 'fileformat', 'filetype'},
+		    lualine_y = {'progress'},
+		    lualine_z = {'location'}
+		},
+		inactive_sections = {
+		    lualine_a = {},
+		    lualine_b = {},
+		    lualine_c = {'filename'},
+		    lualine_x = {'location'},
+		    lualine_y = {},
+		    lualine_z = {}
+		},
+		tabline = {},
+		winbar = {},
+		inactive_winbar = {},
+		extensions = {}
+	    },
 	},
     },
-  },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
   install = { colorscheme = { "habamax" } },
