@@ -2,7 +2,7 @@
 my dotfiles
 
 ## component
-* .bash_profile
+* .bash_profil
 * .bashrc
 * .inputrc
 * .latexmkrc
@@ -12,20 +12,20 @@ my dotfiles
 
 ## path
 ### mac/linux
-.bash_profile        ->    ~
-.bashrc              ->    ~
-.inputrc             ->    ~
-.latexmkrc           ->    ~
-.vimrc               ->    ~
-init.vim             ->    ~/.config/nvim/
-init.lua             ->    ~/.comfig/nvim/
+.bash_profile        ->    ~<br>
+.bashrc              ->    ~<br>
+.inputrc             ->    ~<br>
+.latexmkrc           ->    ~<br>
+.vimrc               ->    ~<br>
+init.vim             ->    ~/.config/nvim/<br>
+init.lua             ->    ~/.comfig/nvim/<br>
 
 ### windows
-.latexmkrc           ->    ~
-.vimrc               ->    ~
-init.vim             ->    ~/AppData/Local/nvim/
-init.lua             ->    ~/AppData/Local/nvim/
+.latexmkrc           ->    ~<br>
+.vimrc               ->    ~<br>
+init.vim             ->    ~/AppData/Local/nvim/<br>
+init.lua             ->    ~/AppData/Local/nvim/<br>
 
 ## note
-.latexmkrc内のpdfビューアは、windows用のパスになっている。
-init.vimはなるべく使わずにinit.luaを推奨する。
+.latexmkrc内のpdfビューアは、windows用のパスになっている。<br>
+init.vimはなるべく使わずにinit.luaを推奨する。<br>
