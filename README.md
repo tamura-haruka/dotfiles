@@ -2,7 +2,7 @@
 my dotfiles
 
 ## component
-* .bash_profil
+* .bash_profile
 * .bashrc
 * .inputrc
 * .latexmkrc
@@ -27,5 +27,10 @@ init.vim             ->    ~/AppData/Local/nvim/<br>
 init.lua             ->    ~/AppData/Local/nvim/<br>
 
 ## note
+### .latexmkrc
 .latexmkrc内のpdfビューアは、windows用のパスになっている。<br>
+### init.lua
 init.vimはなるべく使わずにinit.luaを推奨する。<br>
+IME制御のautocmdはOSによって変える。
+windowsでは`command = :call system(\'zenhan 0\')`、
+macでは`command = :call system(\'im-select com.apple.keylayout.ABC\')`とする。
