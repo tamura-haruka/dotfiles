@@ -1,3 +1,13 @@
+----------------------------------------------------------------------------------------------------
+--functions
+local function path_option()
+    if vim.o.columns > 89 then
+        return 1
+    else
+        return 0
+    end
+end
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -205,7 +215,7 @@ require("lazy").setup({
 		sections = {
 		    lualine_a = {'mode'},
 		    lualine_b = {'branch', 'diff', 'diagnostics'},
-		    lualine_c = {'filename'},
+		    lualine_c = {{'filename', path = path_option()}},
 		    lualine_x = {'encoding', 'fileformat', 'filetype'},
 		    lualine_y = {'progress'},
 		    lualine_z = {'location'}
