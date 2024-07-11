@@ -2,9 +2,9 @@
 --functions
 local function path_option()
     if vim.o.columns > 89 then
-        return 1
+	return 1
     else
-        return 0
+	return 0
     end
 end
 
@@ -71,6 +71,9 @@ vim.keymap.set('n', '<CR><CR>', '<C-w><C-w>')
 vim.keymap.set('i', '<expr><Left>', 'wildmenuidx() ? "<Up>" : "<Left>"')
 vim.keymap.set('i', '<expr><Right>', 'wildmenuidx() ? "<Down>" : "<Right>"')
 
+--Yを行末までのヤンクに設定
+vim.keymap.set('n', 'Y', 'y$')
+
 ----------------------------------------------------------------------------------------------------
 --opt
 --特殊文字表示
@@ -122,7 +125,11 @@ vim.opt.completeopt= 'menuone,noinsert'
 --true color
 vim.opt.termguicolors = true
 
+--コマンドラインの補完候補をメニューのように表示
 vim.opt.wildmenu = true
+
+--補完の候補の行数を10に設定
+vim.opt.pumheight = 10
 
 ----------------------------------------------------------------------------------------------------
 --autocmd
@@ -215,7 +222,7 @@ require("lazy").setup({
 		sections = {
 		    lualine_a = {'mode'},
 		    lualine_b = {'branch', 'diff', 'diagnostics'},
-		    lualine_c = {{'filename', path = path_option()}},
+		    lualine_c = {{'filename', path = path_option}},
 		    lualine_x = {'encoding', 'fileformat', 'filetype'},
 		    lualine_y = {'progress'},
 		    lualine_z = {'location'}
