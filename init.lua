@@ -11,17 +11,17 @@ end
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+    if vim.v.shell_error ~= 0 then
+	vim.api.nvim_echo({
+	    { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+	    { out, "WarningMsg" },
+	    { "\nPress any key to exit..." },
+	}, true, {})
+	vim.fn.getchar()
+	os.exit(1)
+    end
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -136,11 +136,11 @@ vim.opt.pumheight = 10
 --インサートモードを変えた時にIMEを自動でオフ
 vim.api.nvim_create_autocmd({ 'InsertLeave' }, {
     pattern = '*',
-    command = ':call system(\'zenhan 0\')',
+    command = ':call system(\'im-select com.apple.keylayout.ABC\')',
 })
 vim.api.nvim_create_autocmd({ 'CmdlineLeave' }, {
     pattern = '*',
-    command = ':call system(\'zenhan 0\')',
+    command = ':call system(\'im-select com.apple.keylayout.ABC\')',
 })
 
 --ターミナルを開いたときに自動でインサートモード
@@ -271,6 +271,43 @@ require("lazy").setup({
   		},
 	    },
   	},
+	{
+	    "shellRaining/hlchunk.nvim",
+	    opts = {
+		indent = {
+		    enable = true,
+		    priority = 1,
+		    style = { "#888888" },
+		    use_treesitter = false,
+		    chars = { "│" },
+		    ahead_lines = 20,
+		    delay = 100,
+		},
+		chunk = {
+		    enable = true,
+		    style = {
+		        { fg = "#00ffff" },
+		        { fg = "#c21f30" },
+		    },
+		    use_treesitter = true,
+		    chars = {
+		        horizontal_line = "─",
+		        vertical_line = "│",
+		        left_top = "╭",
+		        left_bottom = "╰",
+		        right_arrow = ">",
+		    },
+		    textobject = "",
+		    max_file_size = 2048 * 2048,
+		    error_sign = true,
+		    -- animation related
+		    duration = 200,
+		    delay = 150,
+		},
+		blank = { enabled = false },
+		line_num = { enable = false },
+	    },
+	},
     },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
@@ -302,6 +339,13 @@ vim.cmd[[
     highlight HighlightedLineNr4    ctermfg=84	    guifg=#00d3a6
     highlight HighlightedLineNr5    ctermfg=33	    guifg=#2eacd8
 ]]
+
+--対応する括弧をハイライト
+vim.cmd[[
+    highlight MatchParen guifg=#505050 guibg=#23ffb9
+    highlight MatchParenCur guifg=#e3e3e3 guibg=#FF317F
+]]
+
 vim.g['did_install_default_menus'] = 1
 vim.g['did_install_syntax_menu']   = 1
 vim.g['did_indent_on']             = 1
