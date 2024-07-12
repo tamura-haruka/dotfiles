@@ -222,7 +222,7 @@ require("lazy").setup({
 		sections = {
 		    lualine_a = {'mode'},
 		    lualine_b = {'branch', 'diff', 'diagnostics'},
-		    lualine_c = {{'filename', path = path_option}},
+		    lualine_c = {{'filename', path = path_option()}},
 		    lualine_x = {'encoding', 'fileformat', 'filetype'},
 		    lualine_y = {'progress'},
 		    lualine_z = {'location'}
@@ -241,6 +241,36 @@ require("lazy").setup({
 		extensions = {}
 	    },
 	},
+	{ 
+	    "nvim-treesitter/nvim-treesitter", 
+	    lazy = false,
+	    build = ":TSUpdate", 
+	    main = 'nvim-treesitter.configs', 
+	    opts = {
+		highlight = { enable = true },
+		indent = { enable = true },
+		ensure_installed = {
+		    "bash",
+  		    "c",
+		    "cpp",
+  		    "diff",
+		    "gitcommit",
+		    "gnuplot",
+  		    "html",
+  		    "json",
+  		    "lua",
+  		    "luadoc",
+  		    "markdown",
+		    "norg",
+  		    "python",
+  		    "toml",
+		    "tsv",
+  		    "vim",
+  		    "vimdoc",
+  		    "yaml",
+  		},
+	    },
+  	},
     },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
