@@ -33,4 +33,4 @@ init.lua             ->    ~/AppData/Local/nvim/<br>
 init.vimはなるべく使わずにinit.luaを推奨する。<br>
 IME制御のautocmdはOSによって変える。
 windowsでは`command = :call system(\'zenhan 0\')`、
-macでは`command = :call system(\'im-select com.apple.keylayout.ABC\')`とする。
+macでは`command = ':call system(\'im-select com.apple.inputmethod.Kotoeri.RomajiTyping.Roman\')'`とする。
