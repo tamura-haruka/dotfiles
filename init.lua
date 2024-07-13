@@ -2,9 +2,9 @@
 --functions
 local function path_option()
     if vim.o.columns > 89 then
-	return 1
+		return 1
     else
-	return 0
+		return 0
     end
 end
 
@@ -14,11 +14,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     local lazyrepo = "https://github.com/folke/lazy.nvim.git"
     local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
     if vim.v.shell_error ~= 0 then
-	vim.api.nvim_echo({
-	    { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-	    { out, "WarningMsg" },
-	    { "\nPress any key to exit..." },
-	}, true, {})
+		vim.api.nvim_echo({
+		    { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+		    { out, "WarningMsg" },
+		    { "\nPress any key to exit..." }
+		}, true, {})
 	vim.fn.getchar()
 	os.exit(1)
     end
@@ -91,8 +91,9 @@ vim.opt.relativenumber = true
 vim.opt.wrapscan = true
 
 --インデント周りの設定
-vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 0
+vim.opt.softtabstop = -1
 vim.opt.smartindent = true
 
 vim.opt.encoding = 'utf-8'
@@ -136,184 +137,204 @@ vim.opt.pumheight = 10
 --インサートモードを変えた時にIMEを自動でオフ
 vim.api.nvim_create_autocmd({ 'InsertLeave' }, {
     pattern = '*',
-    command = ':call system(\'im-select com.apple.keylayout.ABC\')',
+    command = ':call system(\'im-select com.apple.keylayout.ABC\')'
 })
 vim.api.nvim_create_autocmd({ 'CmdlineLeave' }, {
     pattern = '*',
-    command = ':call system(\'im-select com.apple.keylayout.ABC\')',
+    command = ':call system(\'im-select com.apple.keylayout.ABC\')'
 })
 
 --ターミナルを開いたときに自動でインサートモード
 vim.api.nvim_create_autocmd({ 'TermOpen' }, {
   pattern = '*',
-  command = 'startinsert',
+  command = 'startinsert'
 })
 
 --ターミナルで行番号を非表示
 vim.api.nvim_create_autocmd({ 'TermOpen' }, {
     pattern = '*',
-    command = 'setlocal norelativenumber',
+    command = 'setlocal norelativenumber'
 })
 vim.api.nvim_create_autocmd({ 'TermOpen' }, {
     pattern = '*',
-    command = 'setlocal nonumber',
+    command = 'setlocal nonumber'
 })
 
--- Setup lazy.nvim
 require("lazy").setup({
     spec = {
-	-- add your plugins here
-	{
-	    'sainnhe/sonokai',
-	    lazy = false,
-	    priority = 1000,
-	    config = function()
-		vim.cmd([[colorscheme sonokai]])
-	    end,
-	},
-	{
-	    'IMOKURI/line-number-interval.nvim',
-	    lazy = false,
-	    priority = 500,
-	    init = function()
-		vim.g.line_number_interval_enable_at_startup = 1
-		vim.g['line_number_interval#use_custom'] = 1
-		vim.g['line_number_interval#custom_interval'] = {1,2,3,4,5,10,20,30,40,50,60,70,80,90}
-		vim.cmd[[
-		    highlight HighlightedLineNr ctermfg=white
-		    highlight DimLineNr ctermfg=238
-		    highlight HighlightedLineNr1 ctermfg=125
-		    highlight HighlightedLineNr2 ctermfg=178
-		    highlight HighlightedLineNr3 ctermfg=254
-		    highlight HighlightedLineNr4 ctermfg=44
-		    highlight HighlightedLineNr5 ctermfg=26
-		]]
-	    end,
-	},
-	{
-	    'vim-jp/vimdoc-ja',
-	    lazy = true,
-	    keys = {
-		{ "h", mode = "c", },
-	    },
-	},
-	{
-	    'nvim-lualine/lualine.nvim',
-	    dependencies = { 'nvim-tree/nvim-web-devicons' },
-	    opts = {
-		options = {
-		    theme = 'horizon',
-		    icons_enabled = true,
-		    component_separators = { left = '', right = ''},
-		    section_separators = { left = '', right = ''},
-		    disabled_filetypes = {
-		        statusline = {},
-		        winbar = {},
-		    },
-		    ignore_focus = {},
-		    always_divide_middle = true,
-		    globalstatus = false,
-		    refresh = {
-			statusline = 1000,
-			tabline = 1000,
-			winbar = 1000,
-		    },
+		{
+		    'sainnhe/sonokai',
+		    lazy = false,
+		    priority = 1000,
+		    config = function()
+				vim.cmd([[colorscheme sonokai]])
+		    end
 		},
-		sections = {
-		    lualine_a = {'mode'},
-		    lualine_b = {'branch', 'diff', 'diagnostics'},
-		    lualine_c = {{'filename', path = path_option()}},
-		    lualine_x = {'encoding', 'fileformat', 'filetype'},
-		    lualine_y = {'progress'},
-		    lualine_z = {'location'}
+		{
+		    'IMOKURI/line-number-interval.nvim',
+		    lazy = false,
+		    priority = 500,
+		    init = function()
+			vim.g.line_number_interval_enable_at_startup = 1
+			vim.g['line_number_interval#use_custom'] = 1
+			vim.g['line_number_interval#custom_interval'] = {1,2,3,4,5,10,20,30,40,50,60,70,80,90}
+			vim.cmd[[
+			    highlight HighlightedLineNr ctermfg=white
+			    highlight DimLineNr ctermfg=238
+			    highlight HighlightedLineNr1 ctermfg=125
+			    highlight HighlightedLineNr2 ctermfg=178
+			    highlight HighlightedLineNr3 ctermfg=254
+			    highlight HighlightedLineNr4 ctermfg=44
+			    highlight HighlightedLineNr5 ctermfg=26
+			]]
+		    end
 		},
-		inactive_sections = {
-		    lualine_a = {},
-		    lualine_b = {},
-		    lualine_c = {'filename'},
-		    lualine_x = {'location'},
-		    lualine_y = {},
-		    lualine_z = {}
+		{
+		    'vim-jp/vimdoc-ja',
+		    lazy = true,
+		    keys = {
+				{ "h", mode = "c", }
+		    }
 		},
-		tabline = {},
-		winbar = {},
-		inactive_winbar = {},
-		extensions = {}
-	    },
-	},
-	{ 
-	    "nvim-treesitter/nvim-treesitter", 
-	    lazy = false,
-	    build = ":TSUpdate", 
-	    main = 'nvim-treesitter.configs', 
-	    opts = {
-		highlight = { enable = true },
-		indent = { enable = true },
-		ensure_installed = {
-		    "bash",
-  		    "c",
-		    "cpp",
-  		    "diff",
-		    "gitcommit",
-		    "gnuplot",
-  		    "html",
-  		    "json",
-  		    "lua",
-  		    "luadoc",
-  		    "markdown",
-		    "norg",
-  		    "python",
-  		    "toml",
-		    "tsv",
-  		    "vim",
-  		    "vimdoc",
-  		    "yaml",
-  		},
-	    },
-  	},
-	{
-	    "shellRaining/hlchunk.nvim",
-	    opts = {
-		indent = {
-		    enable = true,
-		    priority = 1,
-		    style = { "#888888" },
-		    use_treesitter = false,
-		    chars = { "│" },
-		    ahead_lines = 20,
-		    delay = 100,
+		{
+		    'nvim-lualine/lualine.nvim',
+		    dependencies = { 'nvim-tree/nvim-web-devicons' },
+			event = "BufEnter",
+		    opts = {
+			options = {
+			    theme = 'horizon',
+			    icons_enabled = true,
+			    component_separators = { left = '', right = ''},
+			    section_separators = { left = '', right = ''},
+			    disabled_filetypes = {
+			        statusline = {},
+			        winbar = {}
+			    },
+			    ignore_focus = {},
+			    always_divide_middle = true,
+			    globalstatus = false,
+			    refresh = {
+					statusline = 1000,
+					tabline = 1000,
+					winbar = 1000
+			    }
+			},
+			sections = {
+			    lualine_a = {'mode'},
+			    lualine_b = {'branch', 'diff', 'diagnostics'},
+			    lualine_c = {{'filename', path = path_option()}},
+			    lualine_x = {'encoding', 'fileformat', 'filetype'},
+			    lualine_y = {'progress'},
+			    lualine_z = {'location'}
+			},
+			inactive_sections = {
+			    lualine_a = {},
+			    lualine_b = {},
+			    lualine_c = {'filename'},
+			    lualine_x = {'location'},
+			    lualine_y = {},
+			    lualine_z = {}
+			},
+			tabline = {},
+			winbar = {},
+			inactive_winbar = {},
+			extensions = {}
+		    }
 		},
-		chunk = {
-		    enable = true,
-		    style = {
-		        { fg = "#00ffff" },
-		        { fg = "#c21f30" },
-		    },
-		    use_treesitter = true,
-		    chars = {
-		        horizontal_line = "─",
-		        vertical_line = "│",
-		        left_top = "╭",
-		        left_bottom = "╰",
-		        right_arrow = ">",
-		    },
-		    textobject = "",
-		    max_file_size = 2048 * 2048,
-		    error_sign = true,
-		    -- animation related
-		    duration = 200,
-		    delay = 150,
+		{ 
+		    "nvim-treesitter/nvim-treesitter", 
+			event = "BufRead",
+			priority = 50,
+		    build = ":TSUpdate", 
+		    main = 'nvim-treesitter.configs', 
+		    opts = {
+				highlight = { enable = true },
+				indent = { enable = true },
+				ensure_installed = {
+				    "bash",
+  				    "c",
+				    "cpp",
+  				    "diff",
+				    "gitcommit",
+				    "gnuplot",
+				    "html",
+				    "json",
+  				    "lua",
+  				    "luadoc",
+  				    "markdown",
+				    "norg",
+				    "python",
+				    "toml",
+				    "tsv",
+				    "vim",
+				    "vimdoc",
+				    "yaml"
+				}
+		    }
 		},
-		blank = { enabled = false },
-		line_num = { enable = false },
-	    },
-	},
+		{
+		    "shellRaining/hlchunk.nvim",
+		    event = { "BufReadPre", "BufNewFile" },
+		    opts = {
+				indent = {
+				    enable = true,
+				    priority = 10,
+				    style = { "#888888" },
+				    use_treesitter = false,
+				    chars = { "│" },
+				    ahead_lines = 20,
+				    delay = 100
+				},
+				chunk = {
+				    enable = true,
+				    priority = 15,
+				    style = {
+				        { fg = "#00ffff" },
+				        { fg = "#c21f30" }
+				    },
+				    use_treesitter = true,
+				    chars = {
+				        horizontal_line = "─",
+				        vertical_line = "│",
+				        left_top = "╭",
+				        left_bottom = "╰",
+				        right_arrow = ">"
+				    },
+				    textobject = "",
+				    max_file_size = 2048 * 2048,
+				    error_sign = true,
+				    -- animation related
+				    duration = 200,
+				    delay = 150
+				},
+				blank = {
+				    enabled = false,
+				    priority = 5
+				},
+				line_num = {
+				    enable = false,
+				    priority = 4
+				}
+		    }
+		},
+		{
+			"glts/vim-texlog",
+			event = "BufRead"
+		},
+		{
+			"s417-lama/carbonpaper.vim",
+			dependencies = { "NLKNguyen/papercolor-theme" },
+		    event = "CmdlineEnter",
+			init = function()
+				vim.g['carbonpaper#colorscheme'] = 'PaperColor'
+				vim.g['carbonpaper#background'] = 'light'
+				vim.g['carbonpaper#set_background_color'] = 0
+				vim.g['carbonpaper#highlight_bold'] = 1
+			end
+		}
     },
-  -- Configure any other settings here. See the documentation for more details.
-  -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "habamax" } },
-  -- automatically check for plugin updates
-  checker = { enabled = true },
+    install = { colorscheme = { "habamax" } },
+    checker = { enabled = true }
 })
 
 ----------------------------------------------------------------------------------------------------
