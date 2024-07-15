@@ -97,6 +97,27 @@ vim.keymap.set('i', '<expr><Right>', 'wildmenuidx() ? "<Down>" : "<Right>"')
 --Yを行末までのヤンクに設定
 vim.keymap.set('n', 'Y', 'y$')
 
+--検索時に画面中央
+vim.keymap.set('n', 'n', 'nzz')
+vim.keymap.set('n', 'N', 'Nzz')
+vim.keymap.set('n', '*', '*zz')
+vim.keymap.set('n', '#', '#zz')
+
+--lsp関連
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(ctx)
+    local set = vim.keymap.set
+    set("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>", { buffer = true })
+    set("n", "ga", "<cmd>Lspsaga code_action<CR>", { buffer = true })
+	set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+	set('n', 'gd', "<cmd>Lspsaga peek_definition<CR>")
+	set('n', 'ge', vim.diagnostic.open_float, opts)
+	set('n', 'gr', "<cmd>Lspsaga finder<CR>")
+	set('n', "[d", "<cmd>lua vim.diagnostic.goto_prev({ float = false })<CR>zz")
+	set('n', "]d", "<cmd>lua vim.diagnostic.goto_next({ float = false })<CR>zz")
+  end
+})
+
 ----------------------------------------------------------------------------------------------------
 --opt
 --特殊文字表示
@@ -126,7 +147,7 @@ vim.opt.fileencodings = 'utf-8', 'sjis'
 vim.opt.clipboard:append({ "unnamedplus" })
 
 --ファイルの補完メソッド
---vim.opt.wildmode = 'longest','full'
+vim.opt.wildmode = { "longest", "full" }
 
 --インサートモードのカーソルを下線に変更
 vim.opt.guicursor = 'i-ci:hor20'
@@ -154,6 +175,9 @@ vim.opt.wildmenu = true
 
 --補完の候補の行数を10に設定
 vim.opt.pumheight = 20
+
+--cursorholdの時間
+vim.opt.updatetime = 100
 
 ----------------------------------------------------------------------------------------------------
 --autocmd
@@ -189,6 +213,16 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
   command = "set conceallevel=3"
 })
 
+--変数ハイライト
+vim.api.nvim_create_autocmd({"CursorHold", "CursorHoldI"}, {
+  pattern = {"*"},
+  command = "lua vim.lsp.buf.document_highlight()"
+})
+vim.api.nvim_create_autocmd({"CursorMoved", "CursorMovedI"}, {
+  pattern = {"*"},
+  command = "lua vim.lsp.buf.clear_references()"
+})
+
 ----------------------------------------------------------------------------------------------------
 --plugins
 require("lazy").setup({
@@ -203,7 +237,7 @@ require("lazy").setup({
 		},
 		{
 		    'IMOKURI/line-number-interval.nvim',
-			event = { "InsertEnter", "CursorHold", "FocusLost", "BufRead", "BufNewFile" },
+			event = { "InsertEnter", "FocusLost", "BufRead", "BufNewFile" },
 		    priority = 500,
 		    init = function()
 			vim.g.line_number_interval_enable_at_startup = 1
@@ -231,7 +265,7 @@ require("lazy").setup({
 		    'nvim-lualine/lualine.nvim',
 		    dependencies = { 'nvim-tree/nvim-web-devicons' },
 			--event = "BufEnter",
-			event = { "InsertEnter", "CursorHold", "FocusLost", "BufRead", "BufNewFile" },
+			event = { "InsertEnter", "FocusLost", "BufRead", "BufNewFile" },
 		    opts = {
 			options = {
 			    theme = 'horizon',
@@ -273,12 +307,12 @@ require("lazy").setup({
 			extensions = {}
 		    }
 		},
-		{ 
-		    "nvim-treesitter/nvim-treesitter", 
+		{
+		    "nvim-treesitter/nvim-treesitter",
 			event = "BufRead",
 			priority = 50,
-		    build = ":TSUpdate", 
-		    main = 'nvim-treesitter.configs', 
+		    build = ":TSUpdate",
+		    main = 'nvim-treesitter.configs',
 		    opts = {
 				highlight = { enable = true },
 				indent = { enable = true },
@@ -385,11 +419,89 @@ require("lazy").setup({
 			    }
 			},
 			dependencies = { "nvim-lua/plenary.nvim" }
+		},
+		{
+			"williamboman/mason.nvim",
+			cmd = {
+				"Mason",
+				"MasonInstall",
+				"MasonUninstall",
+				"MasonUninstallAll",
+				"MasonLog",
+				"MasonUpdate",
+			},
+			config = function()
+				require("mason").setup()
+			end
+		},
+		{
+			"williamboman/mason-lspconfig.nvim",
+			ft = { "c", "cpp", "lua", "tex" },
+			dependencies = { "williamboman/mason.nvim" },
+			config = function()
+				require("mason-lspconfig").setup()
+				require("mason-lspconfig").setup_handlers({
+				  function(server_name)
+				    require("lspconfig")[server_name].setup({})
+				  end,
+				})
+			end
+		},
+		{
+			"neovim/nvim-lspconfig",
+			ft = { "c", "cpp", "lua", "tex" },
+			confing = function()
+			end,
+		},
+		{
+			"nvimdev/lspsaga.nvim",
+			opts = {
+				definition = {
+					width = 0.3,
+					height = 0.1
+				},
+				finder = {
+					left_width = 0.2,
+					right_width = 0.9,
+					layout = 'normal'
+				}
+			}
+		},
+		{
+			"xiyaowong/transparent.nvim"
+		},
+		{
+			"norcalli/nvim-colorizer.lua",
+			event = { "InsertEnter", "FocusLost", "BufRead", "BufNewFile" },
+			config = function()
+				require'colorizer'.setup()
+			end
 		}
     },
     install = { colorscheme = { "habamax" } },
     checker = { enabled = true }
 })
+
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+vim.lsp.handlers.hover,
+{
+	border = "rounded",
+	width = 60
+}
+)
+vim.diagnostic.config({
+	update_in_insert = true,
+	float = {
+		border = "rounded",
+		width = 60
+	}
+})
+
+
+
+
+
 
 ----------------------------------------------------------------------------------------------------
 --highlight
@@ -405,9 +517,9 @@ vim.cmd[[
 
 --行番号をいい感じに表示
 vim.cmd[[
-    highlight CursorLineNr	    ctermfg=161	    guifg=#e24775
+    highlight CursorLineNr			ctermfg=161	    guifg=#e24775
     highlight HighlightedLineNr	    ctermfg=white   guifg=#f3fbff
-    highlight DimLineNr		    ctermfg=238	    guifg=#5d595c
+    highlight DimLineNr				ctermfg=238	    guifg=#5d595c
     highlight HighlightedLineNr1    ctermfg=172	    guifg=#fdae46
     highlight HighlightedLineNr2    ctermfg=220	    guifg=#f1d026
     highlight HighlightedLineNr3    ctermfg=254	    guifg=#b0e48d
@@ -427,3 +539,13 @@ vim.cmd[[
     highlight @neorg.todo_items.cancelled.norg guifg=#000000
 ]]
 
+--lspの配色の設定
+vim.cmd[[
+    highlight LspReferenceText guibg=#767676
+]]
+
+vim.cmd[[
+	highlight Visual guibg=#41A7A1
+	highlight Search guifg=#000000 guibg=#EEEEEE
+	highlight CurSearch guifg=#000000 guibg=#B6FF00
+]]
