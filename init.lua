@@ -1,3 +1,26 @@
+vim.g['did_install_default_menus'] = 1
+vim.g['did_install_syntax_menu']   = 1
+vim.g['loaded_2html_plugin']       = 1
+vim.g['loaded_man']                = 1
+vim.g['loaded_remote_plugins']     = 1
+vim.g['loaded_shada_plugin']       = 1
+vim.g['loaded_tutor_mode_plugin']  = 1
+vim.g['skip_loading_mswin']        = 1
+vim.g['loaded_gzip']              = 1
+vim.g['loaded_tar']               = 1
+vim.g['loaded_tarPlugin']         = 1
+vim.g['loaded_zip']               = 1
+vim.g['loaded_zipPlugin']         = 1
+vim.g['loaded_rrhelper']          = 1
+vim.g['loaded_2html_plugin']      = 1
+vim.g['loaded_vimball']           = 1
+vim.g['loaded_vimballPlugin']     = 1
+vim.g['loaded_getscript']         = 1
+vim.g['loaded_getscriptPlugin']   = 1
+vim.g['loaded_netrw']             = 1
+vim.g['loaded_netrwPlugin']       = 1
+vim.g['loaded_netrwSettings']     = 1
+vim.g['loaded_netrwFileHandlers'] = 1
 ----------------------------------------------------------------------------------------------------
 --functions
 local function path_option()
@@ -130,18 +153,18 @@ vim.opt.termguicolors = true
 vim.opt.wildmenu = true
 
 --補完の候補の行数を10に設定
-vim.opt.pumheight = 10
+vim.opt.pumheight = 20
 
 ----------------------------------------------------------------------------------------------------
 --autocmd
 --インサートモードを変えた時にIMEを自動でオフ
 vim.api.nvim_create_autocmd({ 'InsertLeave' }, {
     pattern = '*',
-    command = ':call system(\'im-select com.apple.keylayout.ABC\')'
+    command = ':call system(\'im-select com.apple.inputmethod.Kotoeri.RomajiTyping.Roman\')'
 })
 vim.api.nvim_create_autocmd({ 'CmdlineLeave' }, {
     pattern = '*',
-    command = ':call system(\'im-select com.apple.keylayout.ABC\')'
+    command = ':call system(\'im-select com.apple.inputmethod.Kotoeri.RomajiTyping.Roman\')'
 })
 
 --ターミナルを開いたときに自動でインサートモード
@@ -160,6 +183,14 @@ vim.api.nvim_create_autocmd({ 'TermOpen' }, {
     command = 'setlocal nonumber'
 })
 
+--norgファイルを開いたときにconcellevelを変更する
+vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+  pattern = {"*.norg"},
+  command = "set conceallevel=3"
+})
+
+----------------------------------------------------------------------------------------------------
+--plugins
 require("lazy").setup({
     spec = {
 		{
@@ -172,7 +203,7 @@ require("lazy").setup({
 		},
 		{
 		    'IMOKURI/line-number-interval.nvim',
-		    lazy = false,
+			event = { "InsertEnter", "CursorHold", "FocusLost", "BufRead", "BufNewFile" },
 		    priority = 500,
 		    init = function()
 			vim.g.line_number_interval_enable_at_startup = 1
@@ -199,7 +230,8 @@ require("lazy").setup({
 		{
 		    'nvim-lualine/lualine.nvim',
 		    dependencies = { 'nvim-tree/nvim-web-devicons' },
-			event = "BufEnter",
+			--event = "BufEnter",
+			event = { "InsertEnter", "CursorHold", "FocusLost", "BufRead", "BufNewFile" },
 		    opts = {
 			options = {
 			    theme = 'horizon',
@@ -324,13 +356,35 @@ require("lazy").setup({
 		{
 			"s417-lama/carbonpaper.vim",
 			dependencies = { "NLKNguyen/papercolor-theme" },
-		    event = "CmdlineEnter",
+			cmd = 'CarbonPaper',
 			init = function()
 				vim.g['carbonpaper#colorscheme'] = 'PaperColor'
 				vim.g['carbonpaper#background'] = 'light'
 				vim.g['carbonpaper#set_background_color'] = 0
 				vim.g['carbonpaper#highlight_bold'] = 1
 			end
+		},
+		{
+			"nvim-neorg/neorg",
+			ft = 'norg',
+			cmd = 'Neorg',
+			priority = 30,
+			build = ":Neorg sync-parsers",
+			opts = {
+				load = {
+			        ["core.defaults"] = {},
+			        ["core.concealer"] = {},
+			        ["core.dirman"] = {
+						config = {
+			        	    workspaces = {
+			        	    neorg = "~/neorg",
+							},
+			        	default_workspace = "neorg",
+						}
+			        }
+			    }
+			},
+			dependencies = { "nvim-lua/plenary.nvim" }
 		}
     },
     install = { colorscheme = { "habamax" } },
@@ -367,21 +421,9 @@ vim.cmd[[
     highlight MatchParenCur guifg=#e3e3e3 guibg=#FF317F
 ]]
 
-vim.g['did_install_default_menus'] = 1
-vim.g['did_install_syntax_menu']   = 1
-vim.g['did_indent_on']             = 1
-vim.g['did_load_filetypes']        = 1
-vim.g['did_load_ftplugin']         = 1
-vim.g['loaded_2html_plugin']       = 1
-vim.g['loaded_gzip']               = 1
-vim.g['loaded_man']                = 1
-vim.g['loaded_matchit']            = 1
-vim.g['loaded_matchparen']         = 1
-vim.g['loaded_netrwPlugin']        = 1
-vim.g['loaded_remote_plugins']     = 1
-vim.g['loaded_shada_plugin']       = 1
-vim.g['loaded_spellfile_plugin']   = 1
-vim.g['loaded_tarPlugin']          = 1
-vim.g['loaded_tutor_mode_plugin']  = 1
-vim.g['loaded_zipPlugin']          = 1
-vim.g['skip_loading_mswin']        = 1
+--neorgの配色の設定
+vim.cmd[[
+    highlight @neorg.todo_items.done.norg guifg=#53FC51
+    highlight @neorg.todo_items.cancelled.norg guifg=#000000
+]]
+
