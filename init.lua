@@ -64,7 +64,7 @@ vim.keymap.set('i', '\'', '\'\'<LEFT>')
 
 --補完機能の設定()
 --https://note.com/yasukotelin/n/na87dc604e042
-vim.keymap.set('i', '<S-Tab>', '<C-p>')
+--vim.keymap.set('i', '<S-Tab>', '<C-p>')
 vim.keymap.set('i', '<expr><CR>', 'pumvisible() ? "<C-y>" : "<CR>"')
 vim.keymap.set('i', '<expr><C-n>', 'pumvisible() ? "<Down>" : "<C-n>"')
 vim.keymap.set('i', '<expr><C-p>', 'pumvisible() ? "<Up>" : "<C-p>"')
@@ -90,10 +90,6 @@ vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')
 --エンター二回連打でバッファ切り替え
 vim.keymap.set('n', '<CR><CR>', '<C-w><C-w>')
 
---コマンドラインモードの補完で矢印キーで上下移動
-vim.keymap.set('i', '<expr><Left>', 'wildmenuidx() ? "<Up>" : "<Left>"')
-vim.keymap.set('i', '<expr><Right>', 'wildmenuidx() ? "<Down>" : "<Right>"')
-
 --Yを行末までのヤンクに設定
 vim.keymap.set('n', 'Y', 'y$')
 
@@ -117,6 +113,30 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	set('n', "]d", "<cmd>lua vim.diagnostic.goto_next({ float = false })<CR>zz")
   end
 })
+
+--カーソルをジャンプ前に戻す
+vim.keymap.set('n', 'm<CR>', '<C-o>')
+
+--vsnipの補完時の設定
+--https://zenn.dev/block/articles/aed0540e82d88a
+--vim.keymap.set({'i', 's'}, '<Tab>', function() return vim.fn['vsnip#available'](1) == 1 and '<Plug>(vsnip-expand-or-jump)' or '<Tab>' end, { expr = true, noremap = false })
+vim.keymap.set(
+	{'i', 's'},
+	'<Tab>',
+	function()
+		if ( vim.fn['vsnip#expandable']() == 1 and vim.fn['vsnip#jumpable'](1) == 1 ) then
+			return '<Plug>(vsnip-jump-next)'
+		elseif ( vim.fn['vsnip#expandable']() == 1 and vim.fn['vsnip#jumpable'](1) == 0 ) then
+			return '<Plug>(vsnip-expand)'
+		elseif ( vim.fn['vsnip#expandable']() == 0 and vim.fn['vsnip#jumpable'](1) == 1 ) then
+			return '<Plug>(vsnip-jump-next)'
+		else
+			return '<Tab>'
+		end
+	end,
+	{ expr = true, noremap = false }
+)
+vim.keymap.set({'i', 's'}, '<S-Tab>', function() return vim.fn['vsnip#jumpable'](-1) == 1 and '<Plug>(vsnip-jump-prev)' or '<S-Tab>' end, { expr = true, noremap = false })
 
 ----------------------------------------------------------------------------------------------------
 --opt
@@ -179,6 +199,9 @@ vim.opt.pumheight = 20
 --cursorholdの時間
 vim.opt.updatetime = 100
 
+--警告等の列を常に表示
+vim.opt.signcolumn = 'yes'
+
 ----------------------------------------------------------------------------------------------------
 --autocmd
 --インサートモードを変えた時にIMEを自動でオフ
@@ -240,18 +263,18 @@ require("lazy").setup({
 			event = { "InsertEnter", "FocusLost", "BufRead", "BufNewFile" },
 		    priority = 500,
 		    init = function()
-			vim.g.line_number_interval_enable_at_startup = 1
-			vim.g['line_number_interval#use_custom'] = 1
-			vim.g['line_number_interval#custom_interval'] = {1,2,3,4,5,10,20,30,40,50,60,70,80,90}
-			vim.cmd[[
-			    highlight HighlightedLineNr ctermfg=white
-			    highlight DimLineNr ctermfg=238
-			    highlight HighlightedLineNr1 ctermfg=125
-			    highlight HighlightedLineNr2 ctermfg=178
-			    highlight HighlightedLineNr3 ctermfg=254
-			    highlight HighlightedLineNr4 ctermfg=44
-			    highlight HighlightedLineNr5 ctermfg=26
-			]]
+				vim.g.line_number_interval_enable_at_startup = 1
+				vim.g['line_number_interval#use_custom'] = 1
+				vim.g['line_number_interval#custom_interval'] = {1,2,3,4,5,10,20,30,40,50,60,70,80,90}
+				vim.cmd[[
+				    highlight HighlightedLineNr ctermfg=white
+				    highlight DimLineNr ctermfg=238
+				    highlight HighlightedLineNr1 ctermfg=125
+				    highlight HighlightedLineNr2 ctermfg=178
+				    highlight HighlightedLineNr3 ctermfg=254
+				    highlight HighlightedLineNr4 ctermfg=44
+				    highlight HighlightedLineNr5 ctermfg=26
+				]]
 		    end
 		},
 		{
@@ -264,7 +287,6 @@ require("lazy").setup({
 		{
 		    'nvim-lualine/lualine.nvim',
 		    dependencies = { 'nvim-tree/nvim-web-devicons' },
-			--event = "BufEnter",
 			event = { "InsertEnter", "FocusLost", "BufRead", "BufNewFile" },
 		    opts = {
 			options = {
@@ -449,9 +471,7 @@ require("lazy").setup({
 		},
 		{
 			"neovim/nvim-lspconfig",
-			ft = { "c", "cpp", "lua", "tex" },
-			confing = function()
-			end,
+			ft = { "c", "cpp", "lua", "tex" }
 		},
 		{
 			"nvimdev/lspsaga.nvim",
@@ -476,13 +496,69 @@ require("lazy").setup({
 			config = function()
 				require'colorizer'.setup()
 			end
+		},
+		{
+		    'hrsh7th/nvim-cmp',
+			dependencies = {
+				'hrsh7th/cmp-nvim-lsp',
+				'hrsh7th/cmp-buffer',
+				'hrsh7th/cmp-path',
+				'hrsh7th/cmp-cmdline',
+				'hrsh7th/vim-vsnip',
+				'hrsh7th/cmp-vsnip'
+			},
+			event = { "InsertEnter", "CmdlineEnter" },
+		    config = function()
+				local cmp = require'cmp'
+		        cmp.setup({
+					completion = {
+      				  completeopt = "menuone,noinsert", -- "noselect"を除外した残り
+      				},
+					snippet = {
+						expand = function(args)
+						vim.fn["vsnip#anonymous"](args.body)
+						end,
+					},
+					mapping = cmp.mapping.preset.insert({
+						['<C-b>'] = cmp.mapping.scroll_docs(-4),
+						['<C-f>'] = cmp.mapping.scroll_docs(4),
+						['<C-Space>'] = cmp.mapping.complete(),
+						['<C-e>'] = cmp.mapping.abort(),
+						['<CR>'] = cmp.mapping.confirm({ select = true }),
+					}),
+					sources = cmp.config.sources({
+						{ name = 'nvim_lsp' },
+						{ name = 'vsnip' },
+					}, {
+						{ name = 'buffer' },
+					})
+		        })
+		        cmp.setup.cmdline({ '/', '?' }, {
+		          mapping = cmp.mapping.preset.cmdline(),
+		          sources = {
+		            { name = 'buffer' }
+		          }
+		        })
+		        cmp.setup.cmdline(':', {
+					completion = {
+					completeopt = "menu,menuone,noinsert,noselect",
+					},
+					mapping = cmp.mapping.preset.cmdline(),
+					sources = cmp.config.sources({
+						{ name = 'path' }
+					}, {
+						{ name = 'cmdline' }
+					})
+		        })
+		      end
 		}
     },
     install = { colorscheme = { "habamax" } },
     checker = { enabled = true }
 })
 
-
+----------------------------------------------------------------------------------------------------
+--lsp
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
 vim.lsp.handlers.hover,
 {
@@ -495,13 +571,9 @@ vim.diagnostic.config({
 	float = {
 		border = "rounded",
 		width = 60
-	}
+	},
+	severity_sort = true
 })
-
-
-
-
-
 
 ----------------------------------------------------------------------------------------------------
 --highlight
@@ -548,4 +620,5 @@ vim.cmd[[
 	highlight Visual guibg=#41A7A1
 	highlight Search guifg=#000000 guibg=#EEEEEE
 	highlight CurSearch guifg=#000000 guibg=#B6FF00
+
 ]]
