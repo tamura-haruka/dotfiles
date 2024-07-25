@@ -9,6 +9,7 @@ my dotfiles
 * .vimrc
 * init.vim
 * init.lua
+* zathurarc
 
 ## path
 ### mac/linux
@@ -19,6 +20,7 @@ my dotfiles
 .vimrc               ->    ~<br>
 init.vim             ->    ~/.config/nvim/<br>
 init.lua             ->    ~/.comfig/nvim/<br>
+zathurarc            ->    ~/.config/zathura/<br>
 
 ### windows
 .latexmkrc           ->    ~<br>
@@ -33,4 +35,5 @@ init.lua             ->    ~/AppData/Local/nvim/<br>
 init.vimはなるべく使わずにinit.luaを推奨する。<br>
 IME制御のautocmdはOSによって変える。
 windowsでは`command = :call system(\'zenhan 0\')`、
-macでは`command = ':call system(\'im-select com.apple.inputmethod.Kotoeri.RomajiTyping.Roman\')'`とする。
+macでは`command = ':call system(\'im-select com.apple.inputmethod.Kotoeri.RomajiTyping.Roman\')'`とする。<br>
+vim-vsnipのソースとして自作のスニペットファイルを使用しているので、それらを~/.vsnipに追加する必要がある。
