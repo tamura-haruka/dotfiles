@@ -84,6 +84,9 @@ vim.keymap.set('n', '<ESC><ESC>', '<cmd>noh<CR>')
 --ターミナルを水平分割で開くコマンドを定義
 vim.keymap.set('n', 'tx', '<cmd>belowright new<CR><cmd>terminal<CR>')
 
+--ターミナルをフロートウィンドウで開くコマンドを定義
+vim.keymap.set('n', 'ta', '<cmd>Lspsaga term_toggle<CR>')
+
 --ターミナルモード中にescでノーマルモードに移行
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')
 
@@ -161,7 +164,7 @@ vim.opt.softtabstop = -1
 vim.opt.smartindent = true
 
 vim.opt.encoding = 'utf-8'
-vim.opt.fileencodings = 'utf-8', 'sjis'
+vim.opt.fileencodings = {'utf-8', 'sjis'}
 
 --無名のレジスタとクリップボードを結合
 vim.opt.clipboard:append({ "unnamedplus" })
@@ -175,12 +178,13 @@ vim.opt.guicursor = 'i-ci:hor20'
 --日本語の括弧もハイライト
 vim.opt.matchpairs:append({'（:）','「:」', '『:』', '【:】', '［:］', '＜:＞'})
 
---行の折り折り返し
+--行の折り返し
 vim.opt.wrap = false
 
 --スワップファイルを生成しない
 vim.opt.swapfile = false
 
+--カーソル行をハイライト
 vim.opt.cursorline = true
 
 --補完の設定
@@ -356,7 +360,8 @@ require("lazy").setup({
 				    "tsv",
 				    "vim",
 				    "vimdoc",
-				    "yaml"
+				    "yaml",
+					"zathurarc"
 				}
 		    }
 		},
@@ -483,7 +488,7 @@ require("lazy").setup({
 				finder = {
 					left_width = 0.2,
 					right_width = 0.9,
-					layout = 'normal'
+					layout = 'float'
 				}
 			}
 		},
@@ -523,7 +528,7 @@ require("lazy").setup({
 						['<C-b>'] = cmp.mapping.scroll_docs(-4),
 						['<C-f>'] = cmp.mapping.scroll_docs(4),
 						['<C-Space>'] = cmp.mapping.complete(),
-						['<C-e>'] = cmp.mapping.abort(),
+						['<C-j>'] = cmp.mapping.abort(),
 						['<CR>'] = cmp.mapping.confirm({ select = true }),
 					}),
 					sources = cmp.config.sources({
@@ -585,6 +590,7 @@ vim.cmd[[
     highlight LineNr	    ctermbg=NONE    guibg=NONE
     highlight Folded	    ctermbg=NONE    guibg=NONE
     highlight EndOfBuffer   ctermbg=NONE    guibg=NONE
+    highlight NormalFloat   ctermbg=NONE    guibg=NONE
 ]]
 
 --行番号をいい感じに表示
