@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 vim.g['did_install_default_menus'] = 1
 vim.g['did_install_syntax_menu']   = 1
 vim.g['loaded_2html_plugin']       = 1
@@ -245,11 +246,11 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
 
 --変数ハイライト
 vim.api.nvim_create_autocmd({"CursorHold", "CursorHoldI"}, {
-  pattern = {"*"},
+  pattern = {"*.c", "*.cpp", "*.lua", "*.tex"},
   command = "lua vim.lsp.buf.document_highlight()"
 })
 vim.api.nvim_create_autocmd({"CursorMoved", "CursorMovedI"}, {
-  pattern = {"*"},
+  pattern = {"*.c", "*.cpp", "*.lua", "*.tex"},
   command = "lua vim.lsp.buf.clear_references()"
 })
 
