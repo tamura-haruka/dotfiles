@@ -20,7 +20,7 @@ my dotfiles
 .vimrc              ->      ~<br>
 init.vim            ->      ~/.config/nvim/<br>
 init.lua            ->      ~/.comfig/nvim/<br>
-starship.toml       ->      ~/.config/<br>
+starship.toml       ->      ~/.config/starship/<br>
 zathurarc           ->      ~/.config/zathura/<br>
 
 ### windows
