@@ -1,5 +1,6 @@
 set -o vi
 
+#エイリアス
 alias rm='rm -r'
 alias cp='cp -n'
 
@@ -25,7 +26,9 @@ alias alp='cd ~/project/c/alpha'
 alias trr='cd ~/tex/research/regular_report'
 alias dot='cd ~/dotfiles'
 
+#環境変数
 export EDITOR=nvim
+export HISTCONTROL=ignoredups
 
 bind 'set completion-ignore-case on'
 
