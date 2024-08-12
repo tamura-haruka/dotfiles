@@ -30,3 +30,5 @@ export EDITOR=nvim
 bind 'set completion-ignore-case on'
 
 PS1="\n\e[1;34m\w \e[1;33m[\e[1;37m\t\e[1;33m] \n\e[1;31m>\e[0;0m "
+
+eval "$(starship init bash)"
