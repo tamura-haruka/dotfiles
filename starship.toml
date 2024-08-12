@@ -26,7 +26,7 @@ format = '[\[](bold yellow)[$time]($style)[\]](bold yellow)'
 disabled = false
 
 [git_branch]
-truncation_length = 4
+truncation_length = 20
 truncation_symbol = ''
 format = ' [$symbol$branch(:$remote_branch)]($style)'
 
