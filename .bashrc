@@ -20,7 +20,21 @@ alias cat='cat -ns'
 alias cl='clear'
 
 alias log="git log --graph --all --pretty=format:'%x09%C(#919191)%ad%x09%C(ul)%C(#ff0059)%h%Creset %x09%s%x09%C(auto)%d' --date=format-local:'%Y/%m/%d/ %H:%M:%S'"
+alias gad='git add'
+alias gcm='git commit'
+alias gps='git push origin main'
+alias gpl='git pull'
+alias gch='git checkout'
+alias gbr='git branch'
+alias gst='git status'
+alias gdf='git diff'
 
+alias bud='brew update'
+alias bug='brew upgrade'
+alias bin='brew install'
+alias bse='brew search'
+
+alias prc='cd ~/project/c'
 alias cma='cd ~/project/c/Main-AI'
 alias alp='cd ~/project/c/alpha'
 alias trr='cd ~/tex/research/regular_report'
