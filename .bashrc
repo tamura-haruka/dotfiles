@@ -43,6 +43,7 @@ alias dot='cd ~/dotfiles'
 #環境変数
 export EDITOR=nvim
 export HISTCONTROL=ignoredups
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
 bind 'set completion-ignore-case on'
 
