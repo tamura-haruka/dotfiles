@@ -51,7 +51,7 @@ vim.opt.rtp:prepend(lazypath)
 
 ----------------------------------------------------------------------------------------------------
 --default setting
-vim.g.mapleader = " "
+vim.g.mapleader = "\\"
 vim.g.maplocalleader = "\\"
 
 ----------------------------------------------------------------------------------------------------
@@ -123,6 +123,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 --カーソルをジャンプ前に戻す
 vim.keymap.set('n', 'm<CR>', '<C-o>')
+
+--copilot chatを開く
+vim.keymap.set('n', '<leader>cc', '<cmd>CopilotChat<CR>')
 
 --vsnipの補完時の設定
 --https://zenn.dev/block/articles/aed0540e82d88a
@@ -563,8 +566,54 @@ require("lazy").setup({
 		},
 		{
 			"github/copilot.vim",
-			lazy=false
-		}
+			event = { "InsertEnter"},
+		},
+		{
+			"CopilotC-Nvim/CopilotChat.nvim",
+			branch = "canary",
+			dependencies = { "nvim-lua/plenary.nvim" },
+			opts = {
+				debug = true,
+				auto_insert_mode = true,
+				show_help = false,
+				prompts = {
+					Explain = {
+						prompt = '/COPILOT_EXPLAIN カーソル上のコードの説明を段落をつけて書いてください。',
+						mapping = '<leader>ce',
+					},
+					Review = {
+						prompt = '/COPILOT_REVIEW 選択したコードをレビューしてください。レビューコメントは日本語でお願いします。',
+						mapping = '<leader>cr',
+					},
+					Tests = {
+						prompt = '/COPILOT_TESTS カーソル上のコードの詳細な単体テスト関数を書いてください。',
+						mapping = '<leader>ct',
+					},
+					Fix = {
+						prompt = '/COPILOT_FIX このコードには問題があります。バグを修正したコードに書き換えてください。',
+						mapping = '<leader>cf',
+					},
+					Optimize = {
+						prompt = '/COPILOT_REFACTOR 選択したコードを最適化し、パフォーマンスと可読性を向上させてください。',
+						mapping = '<leader>co',
+					},
+					Docs = {
+						prompt = '/COPILOT_REFACTOR 選択したコードのドキュメントを書いてください。ドキュメントをコメントとして追加した元のコードを含むコードブロックで回答してください。使用するプログラミング言語に最も適したドキュメントスタイルを使用してください（例：JavaScriptのJSDoc、Pythonのdocstringsなど）',
+						mapping = '<leader>cd',
+					},
+					--FixDiagnostic = {
+					--	prompt = 'ファイル内の次のような診断上の問題を解決してください:',
+					--	selection = require('CopilotChat.select').diagnostics,
+					--}
+				},
+				window = {
+					layout = 'float',
+					border = 'rounded',
+					width = 0.8,
+					height = 0.8
+				},
+			},
+		},
     },
     install = { colorscheme = { "habamax" } },
     checker = { enabled = true }
