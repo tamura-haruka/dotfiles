@@ -13,20 +13,21 @@ my dotfiles
 
 ## path
 ### mac/linux
-.bash_profile        ->    ~<br>
-.bashrc              ->    ~<br>
-.inputrc             ->    ~<br>
-.latexmkrc           ->    ~<br>
-.vimrc               ->    ~<br>
-init.vim             ->    ~/.config/nvim/<br>
-init.lua             ->    ~/.comfig/nvim/<br>
-zathurarc            ->    ~/.config/zathura/<br>
+.bash_profile       ->      ~<br>
+.bashrc             ->      ~<br>
+.inputrc            ->      ~<br>
+.latexmkrc          ->      ~<br>
+.vimrc              ->      ~<br>
+init.vim            ->      ~/.config/nvim/<br>
+init.lua            ->      ~/.comfig/nvim/<br>
+starship.toml       ->      ~/.config/<br>
+zathurarc           ->      ~/.config/zathura/<br>
 
 ### windows
-.latexmkrc           ->    ~<br>
-.vimrc               ->    ~<br>
-init.vim             ->    ~/AppData/Local/nvim/<br>
-init.lua             ->    ~/AppData/Local/nvim/<br>
+.latexmkrc          ->      ~<br>
+.vimrc              ->      ~<br>
+init.vim            ->      ~/AppData/Local/nvim/<br>
+init.lua            ->      ~/AppData/Local/nvim/<br>
 
 ## note
 ### .latexmkrc
