@@ -559,6 +559,10 @@ require("lazy").setup({
 					})
 		        })
 		      end
+		},
+		{
+			"github/copilot.vim",
+			lazy=false
 		}
     },
     install = { colorscheme = { "habamax" } },
