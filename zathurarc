@@ -1,0 +1,49 @@
+set incremental-search true
+set statusbar-home-tilde true
+set window-height 3000
+set window-width 700
+
+# Dracula color theme
+set notification-error-bg       #ff5555
+set notification-error-fg       #f8f8f2
+set notification-warning-bg     #ffb86c
+set notification-warning-fg     #44475a
+set notification-bg             #282a36
+set notification-fg             #f8f8f2
+
+set completion-bg               #282a36
+set completion-fg               #6272a4
+set completion-group-bg         #282a36
+set completion-group-fg         #6272a4
+set completion-highlight-bg     #44475a
+set completion-highlight-fg     #f8f8f2
+
+set index-bg                    #282a36
+set index-fg                    #f8f8f2
+set index-active-bg             #44475a
+set index-active-fg             #f8f8f2
+
+set inputbar-bg                 #282a36
+set inputbar-fg                 #f8f8f2
+set statusbar-bg                rgba(190,190,190,0.5)
+set statusbar-fg                #f8f8f2
+
+set highlight-fg				"#000000"
+set highlight-color				"#eeeeee"
+set highlight-active-color      "#ff0000"
+
+set default-bg                  rgba(0,0,0,0.5)
+set default-fg                  "#f8f8f2"
+
+set render-loading              true
+set render-loading-fg           "#282a36"
+set render-loading-bg           "#f8f8f2"
+
+# Recolor mode settings
+set recolor-lightcolor          "#282a36"
+set recolor-darkcolor           "#f8f8f2"
+set recolor-keephue true
+
+# Startup options
+set adjust-open width
+set recolor true
