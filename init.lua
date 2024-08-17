@@ -680,6 +680,8 @@ vim.cmd[[
 --lspの配色の設定
 vim.cmd[[
     highlight LspReferenceText guibg=#767676
+	highlight DiagnosticVirtualTextError guifg=#fc5d7c
+	highlight DiagnosticVirtualTextWarn guifg=#e7c664
 ]]
 
 vim.cmd[[
