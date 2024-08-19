@@ -122,7 +122,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 --カーソルをジャンプ前に戻す
-vim.keymap.set('n', '<leader>j', '<C-o>')
+vim.keymap.set('n', 'm<CR>', '<C-o>')
 
 --copilot chatを開く
 vim.keymap.set('n', '<leader>cc', '<cmd>CopilotChat<CR>')
@@ -544,6 +544,7 @@ require("lazy").setup({
 					sources = cmp.config.sources({
 						{ name = 'nvim_lsp' },
 						{ name = 'vsnip' },
+						{ name = 'gitmoji' }
 					}, {
 						{ name = 'buffer' },
 					})
@@ -706,6 +707,20 @@ require("lazy").setup({
 					map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
 				end
 			}
+		},
+		{
+		    "Dynge/gitmoji.nvim",
+		    ft = "gitcommit",
+		    dependencies = {
+		        "hrsh7th/nvim-cmp",
+		    },
+		    opts = {
+		        filetypes = { "gitcommit" },
+		        completion = {
+		            append_space = false,
+		            complete_as = "emoji",
+		        }
+		    }
 		}
     },
     install = { colorscheme = { "habamax" } },
@@ -779,3 +794,4 @@ vim.cmd[[
 	highlight Search guifg=#000000 guibg=#EEEEEE
 	highlight CurSearch guifg=#000000 guibg=#B6FF00
 ]]
+
