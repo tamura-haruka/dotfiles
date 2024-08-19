@@ -133,22 +133,6 @@ vim.keymap.set('n', '<leader>lp', '<cmd>!latexmk -pv<CR>')
 --vsnipの補完時の設定
 --https://zenn.dev/block/articles/aed0540e82d88a
 --vim.keymap.set({'i', 's'}, '<Tab>', function() return vim.fn['vsnip#available'](1) == 1 and '<Plug>(vsnip-expand-or-jump)' or '<Tab>' end, { expr = true, noremap = false })
-vim.keymap.set(
-	{'i', 's'},
-	'<Tab>',
-	function()
-		if ( vim.fn['vsnip#expandable']() == 1 and vim.fn['vsnip#jumpable'](1) == 1 ) then
-			return '<Plug>(vsnip-jump-next)'
-		elseif ( vim.fn['vsnip#expandable']() == 1 and vim.fn['vsnip#jumpable'](1) == 0 ) then
-			return '<Plug>(vsnip-expand)'
-		elseif ( vim.fn['vsnip#expandable']() == 0 and vim.fn['vsnip#jumpable'](1) == 1 ) then
-			return '<Plug>(vsnip-jump-next)'
-		else
-			return '<Tab>'
-		end
-	end,
-	{ expr = true, noremap = false }
-)
 vim.keymap.set({'i', 's'}, '<S-Tab>', function() return vim.fn['vsnip#jumpable'](-1) == 1 and '<Plug>(vsnip-jump-prev)' or '<S-Tab>' end, { expr = true, noremap = false })
 
 ----------------------------------------------------------------------------------------------------
@@ -258,6 +242,29 @@ vim.api.nvim_create_autocmd({"CursorHold", "CursorHoldI"}, {
 vim.api.nvim_create_autocmd({"CursorMoved", "CursorMovedI"}, {
   pattern = {"*.c", "*.cpp", "*.lua", "*.tex"},
   command = "lua vim.lsp.buf.clear_references()"
+})
+
+--vsnipのスニペットの補完の設定
+vim.api.nvim_create_autocmd("InsertCharPre", {
+	pattern = "*",
+	callback = function()
+		vim.keymap.set(
+			{'i', 's'},
+			'<Tab>',
+			function()
+				if ( vim.fn['vsnip#expandable']() == 1 and vim.fn['vsnip#jumpable'](1) == 1 ) then
+					return '<Plug>(vsnip-jump-next)'
+				elseif ( vim.fn['vsnip#expandable']() == 1 and vim.fn['vsnip#jumpable'](1) == 0 ) then
+					return '<Plug>(vsnip-expand)'
+				elseif ( vim.fn['vsnip#expandable']() == 0 and vim.fn['vsnip#jumpable'](1) == 1 ) then
+					return '<Plug>(vsnip-jump-next)'
+				else
+					return '<Tab>'
+				end
+			end,
+			{ expr = true, noremap = false }
+		)
+	end
 })
 
 ----------------------------------------------------------------------------------------------------
@@ -570,10 +577,11 @@ require("lazy").setup({
 		},
 		{
 			"github/copilot.vim",
-			event = { "InsertEnter"},
+			event = { "InsertEnter" },
+			cmd = { "Copilot" },
 			config = function()
+				vim.keymap.set("i", "qq", 'copilot#Accept("qq")', { silent = true, expr = true, replace_keycodes = false })
 				vim.g.copilot_no_tab_map = true
-				vim.keymap.set("i", "qq", 'copilot#Accept("<CR>")', { silent = true, expr = true, replace_keycodes = false })
     		end
 		},
 		{
