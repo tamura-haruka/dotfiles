@@ -130,6 +130,7 @@ vim.keymap.set('n', '<leader>cc', '<cmd>CopilotChat<CR>')
 --latexのコンパイル
 vim.keymap.set('n', '<leader>lm', '<cmd>!latexmk<CR>')
 vim.keymap.set('n', '<leader>lp', '<cmd>!latexmk -pv<CR>')
+
 --vsnipの補完時の設定
 --https://zenn.dev/block/articles/aed0540e82d88a
 --vim.keymap.set({'i', 's'}, '<Tab>', function() return vim.fn['vsnip#available'](1) == 1 and '<Plug>(vsnip-expand-or-jump)' or '<Tab>' end, { expr = true, noremap = false })
