@@ -21,6 +21,7 @@ my dotfiles
 init.vim            ->      ~/.config/nvim/<br>
 init.lua            ->      ~/.comfig/nvim/<br>
 starship.toml       ->      ~/.config/starship/<br>
+.textlintrc			->		~<br>
 zathurarc           ->      ~/.config/zathura/<br>
 
 ### windows
