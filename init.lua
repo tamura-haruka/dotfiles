@@ -794,4 +794,3 @@ vim.cmd[[
 	highlight Search guifg=#000000 guibg=#EEEEEE
 	highlight CurSearch guifg=#000000 guibg=#B6FF00
 ]]
-
