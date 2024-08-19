@@ -734,6 +734,21 @@ require("lazy").setup({
 		            complete_as = "emoji",
 		        }
 		    }
+		},
+		{
+			"nvimtools/none-ls.nvim",
+			dependencies = 'nvim-lua/plenary.nvim',
+			config = function()
+				local null_ls = require("null-ls")
+				local textlint = null_ls.builtins.diagnostics.textlint.with({
+					filetypes = { "txt", "markdown", "lsp_markdown", "tex" },
+				})
+				null_ls.setup({
+					sources = {
+						textlint,
+			    	},
+				})
+			end,
 		}
     },
     install = { colorscheme = { "habamax" } },
