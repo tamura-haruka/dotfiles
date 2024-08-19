@@ -122,7 +122,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 --カーソルをジャンプ前に戻す
-vim.keymap.set('n', 'm<CR>', '<C-o>')
+vim.keymap.set('n', '<leader>j', '<C-o>')
 
 --copilot chatを開く
 vim.keymap.set('n', '<leader>cc', '<cmd>CopilotChat<CR>')
@@ -778,5 +778,4 @@ vim.cmd[[
 	highlight Visual guibg=#41A7A1
 	highlight Search guifg=#000000 guibg=#EEEEEE
 	highlight CurSearch guifg=#000000 guibg=#B6FF00
-
 ]]
