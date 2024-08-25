@@ -457,6 +457,7 @@ require("lazy").setup({
 			"nvim-neorg/neorg",
 			ft = 'norg',
 			cmd = 'Neorg',
+			dependencies = { "nvim-lua/plenary.nvim" },
 			priority = 30,
 			build = ":Neorg sync-parsers",
 			opts = {
@@ -470,10 +471,30 @@ require("lazy").setup({
 							},
 			        	default_workspace = "neorg",
 						}
-			        }
+			        },
+					["core.completion"] = {
+						config = { engine = "nvim-cmp", name = "[Norg]" },
+					},
+					["core.integrations.nvim-cmp"] = {},
+					["core.esupports.indent"] = {
+						config = {
+							indents = {
+								_ = { indent = 0 },
+								heading1 = { indent = 0 },
+								heading2 = { indent = 1 },
+								heading3 = { indent = 2 },
+								heading4 = { indent = 3 },
+								heading5 = { indent = 4 },
+								heading6 = { indent = 5 },
+							},
+						},
+					},
+					["core.export"] = {},
+					["core.export.markdown"] = { config = { extensions = "all" } },
+					["core.todo-introspector"] = {},
+					["core.ui.calendar"] = {}
 			    }
-			},
-			dependencies = { "nvim-lua/plenary.nvim" }
+			}
 		},
 		{
 			"williamboman/mason.nvim",
@@ -562,7 +583,8 @@ require("lazy").setup({
 					sources = cmp.config.sources({
 						{ name = 'nvim_lsp' },
 						{ name = 'vsnip' },
-						{ name = 'gitmoji' }
+						{ name = 'gitmoji' },
+						{ name = 'neorg'}
 					}, {
 						{ name = 'buffer' },
 					})
