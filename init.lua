@@ -136,6 +136,16 @@ vim.keymap.set('n', '<leader>lp', '<cmd>!latexmk -pv<CR>')
 --vim.keymap.set({'i', 's'}, '<Tab>', function() return vim.fn['vsnip#available'](1) == 1 and '<Plug>(vsnip-expand-or-jump)' or '<Tab>' end, { expr = true, noremap = false })
 vim.keymap.set({'i', 's'}, '<S-Tab>', function() return vim.fn['vsnip#jumpable'](-1) == 1 and '<Plug>(vsnip-jump-prev)' or '<S-Tab>' end, { expr = true, noremap = false })
 
+--gfでurlを開く
+vim.keymap.set("n", "gf", function()
+  local cfile = vim.fn.expand("<cfile>")
+  if cfile:match("^https?://") then
+    vim.ui.open(cfile)
+  else
+    vim.cmd("normal! gF")
+  end
+end)
+
 ----------------------------------------------------------------------------------------------------
 --opt
 --特殊文字表示
