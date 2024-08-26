@@ -587,7 +587,8 @@ require("lazy").setup({
 				'hrsh7th/cmp-path',
 				'hrsh7th/cmp-cmdline',
 				'hrsh7th/vim-vsnip',
-				'hrsh7th/cmp-vsnip'
+				'hrsh7th/cmp-vsnip',
+				'hrsh7th/cmp-emoji'
 			},
 			event = { "InsertEnter", "CmdlineEnter" },
 		    config = function()
@@ -612,8 +613,8 @@ require("lazy").setup({
 						{ name = 'nvim_lsp' },
 						{ name = 'vsnip' },
 						{ name = 'gitmoji' },
-						{ name = 'neorg'}
-					}, {
+						{ name = 'neorg'},
+						{ name = 'emoji', insert = true },
 						{ name = 'buffer' },
 					})
 		        })
