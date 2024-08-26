@@ -410,8 +410,8 @@ require("lazy").setup({
 				    enable = true,
 				    priority = 15,
 				    style = {
-				        { fg = "#00ffff" },
-				        { fg = "#c21f30" }
+				        { fg = "#00FFFF" },
+				        { fg = "#C21F30" }
 				    },
 				    use_treesitter = true,
 				    chars = {
@@ -848,20 +848,20 @@ vim.cmd[[
 
 --行番号をいい感じに表示
 vim.cmd[[
-    highlight CursorLineNr			ctermfg=161	    guifg=#e24775
-    highlight HighlightedLineNr	    ctermfg=white   guifg=#f3fbff
-    highlight DimLineNr				ctermfg=238	    guifg=#5d595c
-    highlight HighlightedLineNr1    ctermfg=172	    guifg=#fdae46
-    highlight HighlightedLineNr2    ctermfg=220	    guifg=#f1d026
-    highlight HighlightedLineNr3    ctermfg=254	    guifg=#b0e48d
-    highlight HighlightedLineNr4    ctermfg=84	    guifg=#00d3a6
-    highlight HighlightedLineNr5    ctermfg=33	    guifg=#2eacd8
+    highlight CursorLineNr			ctermfg=161	    guifg=#E24775
+    highlight HighlightedLineNr	    ctermfg=white   guifg=#F3FBFF
+    highlight DimLineNr				ctermfg=238	    guifg=#5D595C
+    highlight HighlightedLineNr1    ctermfg=172	    guifg=#FDAE46
+    highlight HighlightedLineNr2    ctermfg=220	    guifg=#F1D026
+    highlight HighlightedLineNr3    ctermfg=254	    guifg=#B0E48D
+    highlight HighlightedLineNr4    ctermfg=84	    guifg=#00D3A6
+    highlight HighlightedLineNr5    ctermfg=33	    guifg=#2EACD8
 ]]
 
 --対応する括弧をハイライト
 vim.cmd[[
-    highlight MatchParen guifg=#505050 guibg=#23ffb9
-    highlight MatchParenCur guifg=#e3e3e3 guibg=#FF317F
+    highlight MatchParen guifg=#505050 guibg=#23FFB9
+    highlight MatchParenCur guifg=#E3E3E3 guibg=#FF317F
 ]]
 
 --neorgの配色の設定
@@ -894,8 +894,8 @@ vim.api.nvim_create_autocmd("BufRead", {
 --lspの配色の設定
 vim.cmd[[
     highlight LspReferenceText guibg=#767676
-	highlight DiagnosticVirtualTextError guifg=#fc5d7c
-	highlight DiagnosticVirtualTextWarn guifg=#e7c664
+	highlight DiagnosticVirtualTextError guifg=#FC5D7C
+	highlight DiagnosticVirtualTextWarn guifg=#E7C664
 ]]
 
 vim.cmd[[
