@@ -463,7 +463,35 @@ require("lazy").setup({
 			opts = {
 				load = {
 			        ["core.defaults"] = {},
-			        ["core.concealer"] = {},
+			        ["core.concealer"] = {
+						config = {
+							icons = {
+								heading = {
+									icons = { "◉", "◎", "○", "◈", "◇", "●" },
+								},
+								todo = {
+									cancelled = {
+										icon = "󰩺"
+									},
+									on_hold = {
+										icon = ""
+									},
+									pending = {
+										icon = "󰤆"
+									},
+									recurring = {
+										icon = ""
+									},
+									uncertain = {
+										icon = "?"
+									},
+									urgent = {
+										icon = "󱈸"
+									}
+								}
+							}
+						}
+					},
 			        ["core.dirman"] = {
 						config = {
 			        	    workspaces = {
@@ -837,10 +865,31 @@ vim.cmd[[
 ]]
 
 --neorgの配色の設定
-vim.cmd[[
-    highlight @neorg.todo_items.done.norg guifg=#53FC51
-    highlight @neorg.todo_items.cancelled.norg guifg=#000000
-]]
+vim.api.nvim_create_autocmd("BufRead", {
+	pattern = "*.norg",
+	callback = function()
+		vim.cmd[[
+			highlight @neorg.lists.unordered.prefix.norg	guifg=#FFFFFF
+			highlight @neorg.headings.1.title				guifg=#FC5D7C gui=bold
+			highlight @neorg.headings.1.prefix				guifg=#FC5D7C
+			highlight @neorg.headings.2.title				guifg=#F39660 gui=bold
+			highlight @neorg.headings.2.prefix				guifg=#F39660
+			highlight @neorg.headings.3.title				guifg=#E7C664 gui=bold
+			highlight @neorg.headings.3.prefix				guifg=#E7C664 gui=bold
+			highlight @neorg.headings.4.title				guifg=#A7DF78
+			highlight @neorg.headings.4.prefix				guifg=#A7DF78
+			highlight @neorg.headings.5.title				guifg=#76CCE0
+			highlight @neorg.headings.5.prefix				guifg=#76CCE0
+			highlight @neorg.headings.6.title				guifg=#B39DF2
+			highlight @neorg.headings.6.prefix				guifg=#B39DF2
+			highlight @neorg.todo_items.done.norg			guifg=#A7DF78
+    		highlight @neorg.todo_items.cancelled.norg		guifg=#3A4F70
+			highlight @neorg.todo_items.on_hold.norg		guifg=#23FFB9
+			highlight @neorg.todo_items.urgent.norg			guifg=#f32039
+			highlight @neorg.todo_items.recurring.norg		guifg=#E7C664
+		]]
+	end
+})
 
 --lspの配色の設定
 vim.cmd[[
