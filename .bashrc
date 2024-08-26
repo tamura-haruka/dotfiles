@@ -39,6 +39,8 @@ alias cma='cd ~/project/c/Main-AI'
 alias alp='cd ~/project/c/alpha'
 alias trr='cd ~/tex/research/regular_report'
 alias dot='cd ~/dotfiles'
+alias neo='cd ~/neorg'
+alias noe='cd ~/neorg'
 
 #環境変数
 export EDITOR=nvim
