@@ -15,6 +15,7 @@ alias ....='cd ../../..'
 alias mkdir='mkdir -p'
 
 alias ni='touch'
+alias ii='open'
 
 alias cat='cat -ns'
 alias cl='clear'
