@@ -284,6 +284,29 @@ vim.api.nvim_create_autocmd("InsertCharPre", {
 	end
 })
 
+--自動でファイルタイプを設定
+vim.api.nvim_create_autocmd({"BufNewFile", "BufEnter"}, {
+    pattern = "*.plt",
+    command = "set filetype=gnuplot"
+})
+vim.api.nvim_create_autocmd({"BufNewFile", "BufEnter", "CursorMoved", "InsertEnter"}, {
+    pattern = "*.snippets",
+    command = "set filetype=snippets"
+})
+vim.api.nvim_create_autocmd({"BufNewFile", "BufEnter"}, {
+    pattern = "*.log",
+    callback = function(event)
+        local current_dir = vim.fn.expand("%:p:h")
+        if current_dir:match("/tmp") then
+            vim.bo[event.buf].filetype = "texlog"
+        end
+    end
+})
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "help",
+    command = "res 50"
+})
+
 ----------------------------------------------------------------------------------------------------
 --plugins
 require("lazy").setup({
