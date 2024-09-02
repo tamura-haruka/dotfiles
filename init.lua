@@ -882,7 +882,7 @@ vim.cmd[[
 ]]
 
 --neorgの配色の設定
-vim.api.nvim_create_autocmd( { "BufRead", "CmdwinLeave" }, {
+vim.api.nvim_create_autocmd( { "BufRead", "CursorMoved" }, {
 	pattern = "*.norg",
 	callback = function()
 		vim.cmd[[
