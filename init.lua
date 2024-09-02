@@ -253,11 +253,11 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
 
 --変数ハイライト
 vim.api.nvim_create_autocmd({"CursorHold", "CursorHoldI"}, {
-  pattern = {"*.c", "*.cpp", "*.lua", "*.tex"},
+  pattern = {"*.c", "*.cpp", "*.lua", "*.py", "*.tex"},
   command = "lua vim.lsp.buf.document_highlight()"
 })
 vim.api.nvim_create_autocmd({"CursorMoved", "CursorMovedI"}, {
-  pattern = {"*.c", "*.cpp", "*.lua", "*.tex"},
+  pattern = {"*.c", "*.cpp", "*.lua", "*.py", "*.tex"},
   command = "lua vim.lsp.buf.clear_references()"
 })
 
@@ -546,7 +546,7 @@ require("lazy").setup({
 		},
 		{
 			"williamboman/mason-lspconfig.nvim",
-			ft = { "c", "cpp", "lua", "tex" },
+			ft = { "c", "cpp", "lua", "python", "tex" },
 			dependencies = { "williamboman/mason.nvim" },
 			config = function()
 				require("mason-lspconfig").setup()
@@ -559,7 +559,7 @@ require("lazy").setup({
 		},
 		{
 			"neovim/nvim-lspconfig",
-			ft = { "c", "cpp", "lua", "tex" }
+			ft = { "c", "cpp", "lua", "python", "tex" }
 		},
 		{
 			"nvimdev/lspsaga.nvim",
