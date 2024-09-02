@@ -131,6 +131,12 @@ vim.keymap.set('n', '<leader>cc', '<cmd>CopilotChat<CR>')
 vim.keymap.set('n', '<leader>lm', '<cmd>!latexmk<CR>')
 vim.keymap.set('n', '<leader>lp', '<cmd>!latexmk -pv<CR>')
 
+--vim-translator
+vim.keymap.set('n', 'tr', '<Plug>Translate')
+vim.keymap.set('v', 'tr', '<Plug>TranslateV')
+vim.keymap.set('n', 'tw', '<Plug>TranslateW')
+vim.keymap.set('v', 'tw', '<Plug>TranslateWV')
+
 --vsnipの補完時の設定
 --https://zenn.dev/block/articles/aed0540e82d88a
 --vim.keymap.set({'i', 's'}, '<Tab>', function() return vim.fn['vsnip#available'](1) == 1 and '<Plug>(vsnip-expand-or-jump)' or '<Tab>' end, { expr = true, noremap = false })
@@ -810,6 +816,16 @@ require("lazy").setup({
 			    	},
 				})
 			end,
+		},
+		{
+			"voldikss/vim-translator",
+			config = function ()
+				vim.g['translator_target_lang'] = 'ja'
+				vim.g['translator_default_engines'] = {'google'}
+				vim.g['translator_window_type'] = 'popup'
+				vim.g['translator_window_max_width'] = 0.4
+				vim.g['translator_window_max_height'] = 0.6
+			end
 		}
     },
     install = { colorscheme = { "habamax" } },
