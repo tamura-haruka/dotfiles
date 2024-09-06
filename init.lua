@@ -117,7 +117,7 @@ vim.keymap.set("n", "<S-CR>", "<Plug>(neorg.esupports.hop.hop-link)", {})
 
 --lsp関連
 vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(ctx)
+  callback = function()
     local set = vim.keymap.set
     set("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>", { buffer = true })
     set("n", "ga", "<cmd>Lspsaga code_action<CR>", { buffer = true })
