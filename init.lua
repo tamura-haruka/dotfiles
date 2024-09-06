@@ -318,6 +318,11 @@ vim.api.nvim_create_autocmd("FileType", {
     command = "res 50"
 })
 
+--Copilotの自動起動
+vim.api.nvim_create_autocmd("VimEnter", {
+    pattern = "*",
+    command = "Copilot"
+})
 ----------------------------------------------------------------------------------------------------
 --plugins
 require("lazy").setup({
@@ -683,6 +688,7 @@ require("lazy").setup({
 			cmd = { "Copilot" },
 			config = function()
 				vim.keymap.set("i", "qq", 'copilot#Accept("qq")', { silent = true, expr = true, replace_keycodes = false })
+				vim.keymap.set("i", "っq", 'copilot#Accept("qq")', { silent = true, expr = true, replace_keycodes = false })
 				vim.g.copilot_no_tab_map = true
     		end
 		},
