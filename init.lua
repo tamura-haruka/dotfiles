@@ -142,8 +142,10 @@ vim.keymap.set('n', '<leader>lp', '<cmd>!latexmk -pv<CR>')
 
 --vim-translator
 vim.keymap.set('n', 'tr', '<Plug>Translate')
+vim.keymap.set('n', 'tR', ':Translate --target_lang=en --source_lang=ja<CR>')
 vim.keymap.set('v', 'tr', '<Plug>TranslateV')
 vim.keymap.set('n', 'tw', '<Plug>TranslateW')
+vim.keymap.set('n', 'tW', ':TranslateW --target_lang=en --source_lang=ja<CR>')
 vim.keymap.set('v', 'tw', '<Plug>TranslateWV')
 
 --vsnipの補完時の設定
