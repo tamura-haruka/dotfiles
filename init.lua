@@ -62,6 +62,15 @@ vim.keymap.set('i', '[', '[]<LEFT>')
 vim.keymap.set('i', '(', '()<LEFT>')
 vim.keymap.set('i', '"', '""<LEFT>')
 vim.keymap.set('i', '\'', '\'\'<LEFT>')
+vim.keymap.set('i', '`', '``<LEFT>')
+
+--latexの$の自動補完
+vim.api.nvim_create_autocmd("InsertEnter", {
+	pattern = "*.tex",
+	callback = function()
+		vim.keymap.set('i', '$', '$$<LEFT>')
+	end
+})
 
 --補完機能の設定()
 --https://note.com/yasukotelin/n/na87dc604e042
