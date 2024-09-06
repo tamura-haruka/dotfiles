@@ -960,3 +960,9 @@ vim.cmd[[
 	highlight Search guifg=#000000 guibg=#EEEEEE
 	highlight CurSearch guifg=#000000 guibg=#B6FF00
 ]]
+
+--tresitterのcommentの配色の設定
+vim.cmd[[
+	highlight @lsp.type.comment.lua guifg=NONE
+	highlight @comment.todo.comment guifg=#18BAD7 guibg=#203347 gui=bold
+]]
