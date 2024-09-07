@@ -113,7 +113,8 @@ vim.keymap.set('n', '*', '*zz')
 vim.keymap.set('n', '#', '#zz')
 
 --neorgのlink
-vim.keymap.set("n", "<S-CR>", "<Plug>(neorg.esupports.hop.hop-link)", {})
+vim.keymap.set("n", "<S-CR>", "<Plug>(neorg.esupports.hop.hop-link)")
+vim.keymap.set("n", "<leader>ni", "<cmd>Neorg index<CR>")
 
 --lsp関連
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -519,10 +520,10 @@ require("lazy").setup({
 										icon = "󰩺"
 									},
 									on_hold = {
-										icon = ""
+										icon = "󰏤"
 									},
 									pending = {
-										icon = "󰤆"
+										icon = "󰐊"
 									},
 									recurring = {
 										icon = ""
@@ -941,9 +942,11 @@ vim.api.nvim_create_autocmd( { "BufRead", "CursorMoved" }, {
 			highlight @neorg.headings.6.prefix				guifg=#B39DF2
 			highlight @neorg.todo_items.done.norg			guifg=#A7DF78
     		highlight @neorg.todo_items.cancelled.norg		guifg=#3A4F70
-			highlight @neorg.todo_items.on_hold.norg		guifg=#23FFB9
+			highlight @neorg.todo_items.pending.norg		guifg=#23FFB9
+			highlight @neorg.todo_items.on_hold.norg		guifg=#467a80
 			highlight @neorg.todo_items.urgent.norg			guifg=#f32039
 			highlight @neorg.todo_items.recurring.norg		guifg=#E7C664
+			highlight @neorg.quotes.1.content.norg			guifg=#949AAD
 		]]
 	end
 })
