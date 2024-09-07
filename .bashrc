@@ -20,15 +20,18 @@ alias ii='open'
 alias cat='cat -ns'
 alias cl='clear'
 
+alias n='nvim'
+
 alias log="git log --graph --all --pretty=format:'%x09%C(#919191)%ad%x09%C(ul)%C(#ff0059)%h%Creset %x09%s%x09%C(auto)%d' --date=format-local:'%Y/%m/%d/ %H:%M:%S'"
-alias gad='git add'
-alias gcm='git commit'
-alias gps='git push origin main'
+alias gl="git log --all --pretty=format:'%C(auto)%H%x09%d%n%C(#919191)author : %an%n%C(#919191)date : %ad%n%n%C(bold)%s%n%n%b' --date=format-local:'%Y/%m/%d %H:%M:%S'"
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push origin main'
 alias gpl='git pull'
 alias gch='git checkout'
-alias gbr='git branch'
-alias gst='git status'
-alias gdf='git diff'
+alias gb='git branch'
+alias gs='git status'
+alias gd='git diff'
 
 alias bud='brew update'
 alias bug='brew upgrade'
